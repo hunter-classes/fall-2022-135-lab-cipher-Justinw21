@@ -6,7 +6,8 @@
 #include <bits/stdc++.h>
 
 //frequencies for the alphabet in the english language
-std::vector<double> eng_freq = {
+std::vector<double> eng_freq = 
+{
     0.082,
     0.015,
     0.028,
@@ -168,13 +169,11 @@ std::vector<double> rotateFreqs(std::vector<double> v)
 {
 	int index;
 	std::vector<double> result(v.size());
-
 	for(int i = 0; i < v.size();i++) 
     {
 		index = (i + 1) % v.size();
 		result[index] = v[i]; 
 	}
-
 	return result;
 }
 
@@ -191,7 +190,6 @@ std::vector<double> getFreqs(std::string encryptedString){
     for(int i = 0; i < frequencies.size(); i++){
         frequencies[i] = frequencies[i] / (double(c));
     }
-
     return frequencies;
 }
 
@@ -199,22 +197,17 @@ std::string solve(std::string encryptedString)
 {
 	std::vector<double> frequencies(26); //vector for encryptedString's letter frequencies
 	frequencies = getFreqs(encryptedString); 
-
 	int shift = 0;
-
 	double closestDistance = INT_MAX;
 	double currentDistance; 
-
 	for(int i = 1; i < 26; i++) 
     {
 		frequencies =  rotateFreqs(frequencies); //rotates frequencies by one
 		currentDistance = distance(frequencies, eng_freq);
-
 		if (closestDistance > currentDistance) {
 			closestDistance = currentDistance;
 			shift = i;
 		}
-
 	}
 	return encryptCaesar(encryptedString, shift);
 }
